@@ -18,7 +18,7 @@ class FileReader:
 
     def _validate(self, extensions: Sequence[str] | None = None) -> None:
         if not self.path.exists():
-            raise FileNotFoundError(f'Файл self.path не существует')
+            raise FileNotFoundError(f'Файл {self.path} не существует')
 
         if not self.path.is_file():
             raise ValueError("Путь не ведет к файлу")
