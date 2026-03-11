@@ -10,7 +10,7 @@ from app.reports.base import BaseReport
 class MedianCoffeeReport(BaseReport):
     name = "median-coffee"
 
-    def build(self, records: list[StudyRecord]) -> tuple[list[str], list[list[str | int]]]:
+    def build(self, records: list[StudyRecord]) -> tuple[list[str], list[list[str | float]]]:
         spend_by_student: dict[str, list[int]] = defaultdict(list)
 
 
