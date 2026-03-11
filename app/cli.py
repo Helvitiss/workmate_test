@@ -24,20 +24,23 @@ def build_parser(report_registry: list[str]) -> argparse.ArgumentParser:
     )
     return parser
 
+def load_records(files: list[str]) -> list[StudyRecord]:
+    records: list[StudyRecord] = []
 
+    for file in files:
+        path = Path(file)
+        records.extend(FileReader(path).read_csv())
 
-def run():
+    return records
+
+def run() -> int:
     parser = build_parser(list(REPORTS.keys()))
     args = parser.parse_args()
 
-    records: list[StudyRecord] = []
-    for file in args.files:
-        path = Path(file)
-        try:
-            records.extend(FileReader(path).read_csv())
-        except (FileNotFoundError, ValueError) as exc:
-            parser.exit(status=1, message=f"{exc}\n")
-
+    try:
+        records = load_records(args.files)
+    except (FileNotFoundError, ValueError) as exc:
+        parser.exit(status=1, message=f"{exc}\n")
 
     report = REPORTS[args.report]()
     headers, rows = report.build(records)
