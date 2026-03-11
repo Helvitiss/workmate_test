@@ -35,15 +35,5 @@ class FileReader:
             reader = csv.DictReader(csvfile)
 
             for row in reader:
-                records.append(
-                    StudyRecord(
-                        student=row["student"],
-                        date=date.fromisoformat(row["date"]),
-                        coffee_spent=int(row["coffee_spent"]),
-                        sleep_hours=float(row["sleep_hours"]),
-                        study_hours=float(row["study_hours"]),
-                        mood=row["mood"],
-                        exam=row["exam"],
-                    )
-                )
+                records.append(StudyRecord.from_dict(row))
         return records
